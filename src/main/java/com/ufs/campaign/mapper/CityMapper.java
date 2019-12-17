@@ -1,5 +1,6 @@
 package com.ufs.campaign.mapper;
 
+import com.ufs.campaign.mapper.domain.City;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
