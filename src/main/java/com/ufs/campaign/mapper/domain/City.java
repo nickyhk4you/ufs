@@ -1,7 +1,7 @@
 package com.ufs.campaign.mapper.domain;
 
 public class City {
-    
+
     private String cityName;
 
     public String getCityName() {
