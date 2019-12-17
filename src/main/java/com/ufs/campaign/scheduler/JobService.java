@@ -25,7 +25,7 @@ public class JobService {
 //    }
 
     //表示每隔5秒
-    @Scheduled(fixedRate = 3000)
+    @Scheduled(fixedRate = 5000)
     public void fixedRateJob() {
 
         System.out.println("fixedRate 每隔5秒" + new Date());
