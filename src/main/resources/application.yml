@@ -1,0 +1,16 @@
+#spring:
+#  datasource:
+#    db1:
+#      driverClassName: com.mysql.jdbc.Driver
+#      username: 用户名
+#      password: 密码
+#      # spring2.0此处为jdbc-url
+#      jdbc-url: jdbc:mysql://localhost:3306/demo
+#      type: com.alibaba.druid.pool.DruidDataSource
+#    db2:
+#      driverClassName: com.mysql.jdbc.Driver
+#      username: 用户名
+#      password: 密码
+#      # spring2.0此处为jdbc-url
+#      jdbc-url: jdbc:mysql://localhost:3306/demo2
+#      type: com.alibaba.druid.pool.DruidDataSource
