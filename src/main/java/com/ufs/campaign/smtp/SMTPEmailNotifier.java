@@ -50,7 +50,7 @@ public class SMTPEmailNotifier {
         };
         try {
             // 设置发件人邮件地址和名称。填写控制台配置的发信地址,比如xxx@xxx.com。和上面的mail.user保持一致。名称用户可以自定义填写。
-            InternetAddress from = new InternetAddress("alerts@alerts.unileverfoodsolutions.com.cn", "发件人名称（用户自定义填写）");
+            InternetAddress from = new InternetAddress("alerts@alerts.unileverfoodsolutions.com.cn", "UFS Alert");
             message.setFrom(from);
             //可选。设置回信地址
             Address[] a = new Address[1];
