@@ -44,7 +44,6 @@ public class JobController {
         Preconditions.checkNotNull(StringUtils.isEmpty(jobClassName), "jobClassName is null");
         Preconditions.checkNotNull(StringUtils.isEmpty(jobGroupName), "jobGroupName is null");
 
-
         // 启动调度器
         scheduler.start();
         //构建job信息
