@@ -1,6 +1,7 @@
 package com.ufs.campaign.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.google.common.base.Preconditions;
 import com.ufs.campaign.domain.JobAndTrigger;
 import com.ufs.campaign.job.ICampaignTemplateJob;
 import com.ufs.campaign.service.JobAndTriggerSevice;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -38,6 +40,11 @@ public class JobController {
                        @RequestParam(value = "jobGroupName") String jobGroupName,
                        @RequestParam(value = "cronExpression") String cronExpression,
                        @RequestParam(value = "description") String description) throws Exception {
+
+        Preconditions.checkNotNull(StringUtils.isEmpty(jobClassName), "jobClassName is null");
+        Preconditions.checkNotNull(StringUtils.isEmpty(jobGroupName), "jobGroupName is null");
+
+
         // 启动调度器
         scheduler.start();
         //构建job信息

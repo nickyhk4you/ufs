@@ -7,7 +7,7 @@ import org.quartz.JobExecutionException;
  *
  */
 public class UserFlowTwoCampaignTemplateJob extends BaseCampaignTemplateTemplateJob {
-    
+
     @Override
     protected void doExecute(JobExecutionContext context) throws JobExecutionException {
 
