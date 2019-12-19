@@ -2,7 +2,7 @@ package com.ufs.campaign.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.ufs.campaign.domain.JobAndTrigger;
-import com.ufs.campaign.job.IBaseJob;
+import com.ufs.campaign.job.ICampaignTemplateJob;
 import com.ufs.campaign.service.JobAndTriggerSevice;
 import com.ufs.campaign.util.LogWriter;
 import org.quartz.*;
@@ -28,9 +28,9 @@ public class JobController {
     @Qualifier("Scheduler")
     private Scheduler scheduler;
 
-    public static IBaseJob getClass(String classname) throws Exception {
+    public static ICampaignTemplateJob getClass(String classname) throws Exception {
         Class<?> class1 = Class.forName(classname);
-        return (IBaseJob) class1.newInstance();
+        return (ICampaignTemplateJob) class1.newInstance();
     }
 
     @PostMapping(value = "/addjob")

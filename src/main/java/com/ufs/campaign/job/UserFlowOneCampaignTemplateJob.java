@@ -10,15 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 @DisallowConcurrentExecution
-public class DemoJob implements IBaseJob {
-    private final Logger logger = LoggerFactory.getLogger(DemoJob.class);
+public class UserFlowOneCampaignTemplateJob extends BaseCampaignTemplateTemplateJob {
+    private final Logger logger = LoggerFactory.getLogger(UserFlowOneCampaignTemplateJob.class);
 
 
     @Autowired
     private DemoService demoService;
 
     @Override
-    public void execute(JobExecutionContext context)
+    public void doExecute(JobExecutionContext context)
             throws JobExecutionException {
         try {
             demoService.run();

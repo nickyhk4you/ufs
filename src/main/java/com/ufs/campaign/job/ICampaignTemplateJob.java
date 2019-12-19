@@ -7,7 +7,7 @@ import org.quartz.JobExecutionException;
 /**
  *
  */
-public interface IBaseJob extends Job {
+public interface ICampaignTemplateJob extends Job {
     public void execute(JobExecutionContext context) throws JobExecutionException;
 
 }
