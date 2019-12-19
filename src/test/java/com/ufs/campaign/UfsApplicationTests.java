@@ -1,11 +1,15 @@
 package com.ufs.campaign;
 
-import com.ufs.campaign.smtp.SMTPEmailNotifier;
+import com.ufs.campaign.service.email.EmailNotifier;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class UfsApplicationTests {
+
+    @Autowired
+    EmailNotifier emailNotifier;
 
     @Test
     void contextLoads() {
@@ -14,7 +18,7 @@ class UfsApplicationTests {
 
     @Test
     void sendEmail(){
-        SMTPEmailNotifier.send("testMail","khu@adobe.com","");
+        emailNotifier.send("testMail","khu@adobe.com","");
     }
 
 }

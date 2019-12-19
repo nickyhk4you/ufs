@@ -1,4 +1,6 @@
-package com.ufs.campaign.smtp;
+package com.ufs.campaign.service.email;
+
+import org.springframework.stereotype.Service;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -6,11 +8,12 @@ import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
-public class SMTPEmailNotifier {
+@Service
+public class EmailNotifier {
     private static final String ALIDM_SMTP_HOST = "smtpdm.aliyun.com";
     private static final String ALIDM_SMTP_PORT = "80";//或"80"
 
-    public static void send(String messageSubject, String messageTo, String attachment) {
+    public void send(String messageSubject, String messageTo, String attachment) {
         // 配置发送邮件的环境属性
         final Properties props = new Properties();
         // 表示SMTP发送邮件，需要进行身份验证

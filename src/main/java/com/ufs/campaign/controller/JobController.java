@@ -68,7 +68,6 @@ public class JobController {
     public void pauseJob(@RequestParam(value = "jobClassName") String jobClassName, @RequestParam(value = "jobGroupName") String jobGroupName) throws Exception {
 
         try {
-
             scheduler.pauseJob(JobKey.jobKey(jobClassName, jobGroupName));
         } catch (SchedulerException e) {
             //throw new Exception("创建定时任务失败");
@@ -113,7 +112,6 @@ public class JobController {
         Map<String, Object> map = new HashMap<String, Object>();
 
         try {
-
             PageInfo<JobAndTrigger> jobAndTrigger = jobAndTriggerSevice.getJobAndTriggerDetails(pageNum, pageSize);
             map.put("JobAndTrigger", jobAndTrigger);
             map.put("number", jobAndTrigger.getTotal());
