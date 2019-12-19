@@ -1,6 +1,5 @@
-package com.ufs.campaign.domain;
+package com.ufs.campaign.job;
 
-import com.ufs.campaign.job.IBaseJob;
 import com.ufs.campaign.service.DemoService;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;

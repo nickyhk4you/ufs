@@ -6,6 +6,8 @@ import com.ufs.campaign.job.IBaseJob;
 import com.ufs.campaign.service.JobAndTriggerSevice;
 import com.ufs.campaign.util.LogWriter;
 import org.quartz.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +16,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value="/job")
+@RequestMapping(value = "/job")
 public class JobController {
 
+    private final Logger logger = LoggerFactory.getLogger(JobController.class);
 
     @Autowired
     private JobAndTriggerSevice jobAndTriggerSevice;
@@ -25,17 +28,16 @@ public class JobController {
     @Qualifier("Scheduler")
     private Scheduler scheduler;
 
-    public static IBaseJob getClass(String classname) throws Exception
-    {
+    public static IBaseJob getClass(String classname) throws Exception {
         Class<?> class1 = Class.forName(classname);
-        return (IBaseJob)class1.newInstance();
+        return (IBaseJob) class1.newInstance();
     }
 
-    @PostMapping(value="/addjob")
-    public void addJob(@RequestParam(value="jobClassName")String jobClassName,
-                       @RequestParam(value="jobGroupName")String jobGroupName,
-                       @RequestParam(value="cronExpression")String cronExpression,
-                       @RequestParam(value="description")String description) throws Exception {
+    @PostMapping(value = "/addjob")
+    public void addJob(@RequestParam(value = "jobClassName") String jobClassName,
+                       @RequestParam(value = "jobGroupName") String jobGroupName,
+                       @RequestParam(value = "cronExpression") String cronExpression,
+                       @RequestParam(value = "description") String description) throws Exception {
         // 启动调度器
         scheduler.start();
         //构建job信息
@@ -51,61 +53,57 @@ public class JobController {
         try {
             scheduler.scheduleJob(jobDetail, trigger);
         } catch (SchedulerException e) {
-            System.out.println("创建定时任务失败"+e);
-            //throw new Exception("创建定时任务失败");
+            logger.error("创建定时任务失败: "+e );
         }
 
     }
 
-    @PostMapping(value="/pausejob")
-    public void pauseJob(@RequestParam(value="jobClassName")String jobClassName, @RequestParam(value="jobGroupName")String jobGroupName) throws Exception {
+    @PostMapping(value = "/pausejob")
+    public void pauseJob(@RequestParam(value = "jobClassName") String jobClassName, @RequestParam(value = "jobGroupName") String jobGroupName) throws Exception {
 
         try {
 
             scheduler.pauseJob(JobKey.jobKey(jobClassName, jobGroupName));
         } catch (SchedulerException e) {
-            System.out.println("停止定时任务失败"+e);
             //throw new Exception("创建定时任务失败");
+            logger.error("停止定时任务失败: "+e );
         }
 
     }
 
-    @PostMapping(value="/resumejob")
-    public void resumeJob(@RequestParam(value="jobClassName")String jobClassName, @RequestParam(value="jobGroupName")String jobGroupName) throws Exception {
+    @PostMapping(value = "/resumejob")
+    public void resumeJob(@RequestParam(value = "jobClassName") String jobClassName, @RequestParam(value = "jobGroupName") String jobGroupName) throws Exception {
 
         try {
-
             scheduler.resumeJob(JobKey.jobKey(jobClassName, jobGroupName));
         } catch (SchedulerException e) {
-            System.out.println("继续定时任务失败"+e);
-            //throw new Exception("创建定时任务失败");
+            logger.error("继续定时任务失败: "+e );
         }
 
     }
 
-    @PostMapping(value="/deletejob")
-    public void deleteJob(@RequestParam(value="jobClassName")String jobClassName, @RequestParam(value="jobGroupName")String jobGroupName) throws Exception {
+    @PostMapping(value = "/deletejob")
+    public void deleteJob(@RequestParam(value = "jobClassName") String jobClassName, @RequestParam(value = "jobGroupName") String jobGroupName) throws Exception {
 
         try {
             scheduler.pauseTrigger(TriggerKey.triggerKey(jobClassName, jobGroupName));
             scheduler.unscheduleJob(TriggerKey.triggerKey(jobClassName, jobGroupName));
             scheduler.deleteJob(JobKey.jobKey(jobClassName, jobGroupName));
         } catch (SchedulerException e) {
-            System.out.println("删除定时任务失败"+e);
-            //throw new Exception("创建定时任务失败");
+            logger.error("删除定时任务失败: "+e );
         }
 
     }
 
     /**
      * 查询任务列表
+     *
      * @param pageNum
      * @param pageSize
      * @return
      */
-    @GetMapping(value="/queryjob")
-    public Map<String, Object> queryjob(@RequestParam(value="pageNum")Integer pageNum, @RequestParam(value="pageSize")Integer pageSize)
-    {
+    @GetMapping(value = "/queryjob")
+    public Map<String, Object> queryjob(@RequestParam(value = "pageNum") Integer pageNum, @RequestParam(value = "pageSize") Integer pageSize) {
         Map<String, Object> map = new HashMap<String, Object>();
 
         try {
@@ -123,18 +121,18 @@ public class JobController {
 
     /**
      * 修改定时任务
+     *
      * @param jobClassName
      * @param jobGroupName
      * @param cronExpression
      * @param description
      * @throws Exception
      */
-    @PostMapping(value="/reschedulejob")
-    public void rescheduleJob(@RequestParam(value="jobClassName")String jobClassName,
-                              @RequestParam(value="jobGroupName")String jobGroupName,
-                              @RequestParam(value="cronExpression")String cronExpression,
-                              @RequestParam(value="description")String description) throws Exception
-    {
+    @PostMapping(value = "/reschedulejob")
+    public void rescheduleJob(@RequestParam(value = "jobClassName") String jobClassName,
+                              @RequestParam(value = "jobGroupName") String jobGroupName,
+                              @RequestParam(value = "cronExpression") String cronExpression,
+                              @RequestParam(value = "description") String description) throws Exception {
         try {
             TriggerKey triggerKey = TriggerKey.triggerKey(jobClassName, jobGroupName);
             // 表达式调度构建器
