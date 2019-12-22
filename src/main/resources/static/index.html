@@ -122,9 +122,22 @@
 
     <el-dialog title="添加任务" :visible.sync="dialogFormVisible" width="500px">
         <el-form :model="form">
+<!--            <el-form-item label="任务名称" label-width="120px" style="width:400px">-->
+<!--                <el-input v-model="form.jobName" auto-complete="off"></el-input>-->
+<!--            </el-form-item>-->
+
             <el-form-item label="任务名称" label-width="120px" style="width:400px">
-                <el-input v-model="form.jobName" auto-complete="off"></el-input>
+                <el-select  v-model="form.jobName" placeholder="select Layout">
+                    <el-option
+                            v-for="item in form.campaignTemplateList"
+                            :key="item"
+                            :label="item"
+                            :value="item">
+                    </el-option>
+                </el-select>
             </el-form-item>
+
+
             <el-form-item label="任务分组" label-width="120px" style="width:400px">
                 <el-input v-model="form.jobGroup" auto-complete="off"></el-input>
             </el-form-item>
@@ -169,6 +182,9 @@
             //表格当前页数据
             tableData: [],
 
+            //annotatedTemplate
+            annotatedTemplate: [],
+
             //请求的URL
             url:'job/queryjob',
 
@@ -196,6 +212,7 @@
                 jobGroup: '',
                 cronExpression: '',
                 description:'',
+                campaignTemplateList:'',
             },
 
             updateform: {
@@ -253,12 +270,16 @@
 
             //弹出对话框
             handleadd: function(){
+                this.$http.get('job/queryCampaignTemplates').then(function (res) {
+                    this.form.campaignTemplateList=res.body;
+                })
+
                 this.dialogFormVisible = true;
+
             },
 
             //添加
             add: function(){
-
                 this.$http.post('job/addjob',{"jobClassName":this.form.jobName,"jobGroupName":this.form.jobGroup,"cronExpression":this.form.cronExpression,"description":this.form.description},{emulateJSON: true}).then(function(res){
                     this.loadData(this.currentPage, this.pagesize);
                     this.dialogFormVisible = false;

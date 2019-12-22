@@ -3,10 +3,12 @@ package com.ufs.campaign.service;
 import com.ufs.campaign.mapper.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class DemoService extends BaseService {
     private final Logger logger = LoggerFactory.getLogger(DemoService.class);
 //    @Autowired

@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.base.Preconditions;
 import com.ufs.campaign.domain.JobAndTrigger;
 import com.ufs.campaign.job.ICampaignTemplateJob;
+import com.ufs.campaign.service.CampaignTemplateScanner;
 import com.ufs.campaign.service.JobAndTriggerSevice;
 import com.ufs.campaign.util.LogWriter;
 import org.quartz.*;
@@ -14,7 +15,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -30,10 +33,15 @@ public class JobController {
     @Qualifier("Scheduler")
     private Scheduler scheduler;
 
+
+    @Autowired
+    private CampaignTemplateScanner campaignTemplateScanner;
+
     public static ICampaignTemplateJob getClass(String classname) throws Exception {
         Class<?> class1 = Class.forName(classname);
         return (ICampaignTemplateJob) class1.newInstance();
     }
+
 
     @PostMapping(value = "/addjob")
     public void addJob(@RequestParam(value = "jobClassName") String jobClassName,
@@ -47,7 +55,10 @@ public class JobController {
         // 启动调度器
         scheduler.start();
         //构建job信息
-        JobDetail jobDetail = JobBuilder.newJob(getClass(jobClassName).getClass()).withIdentity(jobClassName, jobGroupName).withDescription(description).build();
+
+        ICampaignTemplateJob job = this.campaignTemplateScanner.findCandidateCampaignTemplate().get(jobClassName);
+
+        JobDetail jobDetail = JobBuilder.newJob(job.getClass()).withIdentity(jobClassName, jobGroupName).withDescription(description).build();
 
         //表达式调度构建器(即任务执行的时间)
         CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression);
@@ -59,7 +70,7 @@ public class JobController {
         try {
             scheduler.scheduleJob(jobDetail, trigger);
         } catch (SchedulerException e) {
-            logger.error("创建定时任务失败: "+e );
+            logger.error("创建定时任务失败: " + e);
         }
 
     }
@@ -71,7 +82,7 @@ public class JobController {
             scheduler.pauseJob(JobKey.jobKey(jobClassName, jobGroupName));
         } catch (SchedulerException e) {
             //throw new Exception("创建定时任务失败");
-            logger.error("停止定时任务失败: "+e );
+            logger.error("停止定时任务失败: " + e);
         }
 
     }
@@ -82,7 +93,7 @@ public class JobController {
         try {
             scheduler.resumeJob(JobKey.jobKey(jobClassName, jobGroupName));
         } catch (SchedulerException e) {
-            logger.error("继续定时任务失败: "+e );
+            logger.error("继续定时任务失败: " + e);
         }
 
     }
@@ -95,9 +106,17 @@ public class JobController {
             scheduler.unscheduleJob(TriggerKey.triggerKey(jobClassName, jobGroupName));
             scheduler.deleteJob(JobKey.jobKey(jobClassName, jobGroupName));
         } catch (SchedulerException e) {
-            logger.error("删除定时任务失败: "+e );
+            logger.error("删除定时任务失败: " + e);
         }
 
+    }
+
+    @GetMapping(value = "queryCampaignTemplates")
+    public List<String> queryCampaignTemplatesList() {
+        List<String> campaignTemplateList = new ArrayList<String>();
+        Map<String, ICampaignTemplateJob> campaignTemplateJobMap = campaignTemplateScanner.findCandidateCampaignTemplate();
+        campaignTemplateList.addAll(campaignTemplateJobMap.keySet());
+        return campaignTemplateList;
     }
 
     /**
