@@ -1,4 +1,4 @@
-package com.ufs.campaign.job.factory;
+package com.ufs.campaign.config;
 
 import com.ufs.campaign.util.JobFactory;
 import org.quartz.Scheduler;

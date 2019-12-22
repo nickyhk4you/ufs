@@ -7,17 +7,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-/**
- *
- */
-@CampaignTemplate(templateName="UserFlowTwo")
+@CampaignTemplate(templateName="UserFlowThree")
 @Component
-public class UserFlowTwoCampaignTemplateJob extends BaseCampaignTemplateTemplateJob {
-    private final Logger logger = LoggerFactory.getLogger(UserFlowTwoCampaignTemplateJob.class);
+public class UserFlowThreeCampaignTemplateJob extends BaseCampaignTemplateTemplateJob{
+    private final Logger logger = LoggerFactory.getLogger(UserFlowThreeCampaignTemplateJob.class);
 
     @Override
     protected void doExecute(JobExecutionContext context) throws JobExecutionException {
+        logger.info("UserFlowThreeCampaignTemplateJob...");
 
-        logger.info("UserFlowTwoCampaignTemplateJob...");
+
     }
 }

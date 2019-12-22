@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @CampaignTemplate(templateName="UserFlowOne")
-@DisallowConcurrentExecution
 @Component
 public class UserFlowOneCampaignTemplateJob extends BaseCampaignTemplateTemplateJob {
     private final Logger logger = LoggerFactory.getLogger(UserFlowOneCampaignTemplateJob.class);

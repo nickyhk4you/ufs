@@ -24,16 +24,16 @@ public class JobService {
 //        System.out.println("fixedDelay 每隔5秒" + new Date());
 //    }
 
-    //表示每隔5秒
-    @Scheduled(fixedRate = 5000)
-    public void fixedRateJob() {
-
-        System.out.println("fixedRate 每隔5秒" + new Date());
-    }
-
-    //表示每天8时30分0秒执行
-    @Scheduled(cron = "0 0,30 0,8 ? * ? ")
-    public void cronJob() {
-        System.out.println(new Date() + " ...>>cron....");
-    }
+//    //表示每隔5秒
+//    @Scheduled(fixedRate = 5000)
+//    public void fixedRateJob() {
+//
+//        System.out.println("fixedRate 每隔5秒" + new Date());
+//    }
+//
+//    //表示每天8时30分0秒执行
+//    @Scheduled(cron = "0 0,30 0,8 ? * ? ")
+//    public void cronJob() {
+//        System.out.println(new Date() + " ...>>cron....");
+//    }
 }
