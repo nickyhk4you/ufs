@@ -10,8 +10,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @ServletComponentScan
 @MapperScan(basePackages = "com.ufs.campaign.mapper")
-public class UfsApplication {
+public class CampaignApplication {
     public static void main(String[] args) {
-        SpringApplication.run(UfsApplication.class, args);
+        SpringApplication.run(CampaignApplication.class, args);
     }
 }
