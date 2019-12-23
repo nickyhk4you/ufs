@@ -16,24 +16,14 @@ import java.util.Date;
  * 0 10 3 ? * 1#3  每个月的第三个星期，星期天 执行，#号只能出现在星期的位置
  */
 @Component
-public class JobService {
+public class ImporterService {
 
-//    //表示方法执行完成后5秒
-//    @Scheduled(fixedDelay = 5000)
-//    public void fixedDelayJob() throws InterruptedException {
-//        System.out.println("fixedDelay 每隔5秒" + new Date());
-//    }
+    //表示每隔5秒
+    @Scheduled(fixedRate = 5000)
+    public void fixedRateJob() {
 
-//    //表示每隔5秒
-//    @Scheduled(fixedRate = 5000)
-//    public void fixedRateJob() {
-//
-//        System.out.println("fixedRate 每隔5秒" + new Date());
-//    }
-//
-//    //表示每天8时30分0秒执行
-//    @Scheduled(cron = "0 0,30 0,8 ? * ? ")
-//    public void cronJob() {
-//        System.out.println(new Date() + " ...>>cron....");
-//    }
+        System.out.println("fixedRate 每隔5秒" + new Date());
+    }
+
+
 }

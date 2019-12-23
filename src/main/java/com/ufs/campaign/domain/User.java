@@ -1,4 +1,4 @@
-package com.ufs.campaign.mapper.domain;
+package com.ufs.campaign.domain;
 
 public class User {
     private String name;

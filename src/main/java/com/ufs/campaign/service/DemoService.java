@@ -1,6 +1,6 @@
 package com.ufs.campaign.service;
 
-import com.ufs.campaign.mapper.domain.User;
+import com.ufs.campaign.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

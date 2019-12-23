@@ -1,6 +1,6 @@
 package com.ufs.campaign.mapper;
 
-import com.ufs.campaign.mapper.domain.User;
+import com.ufs.campaign.domain.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
