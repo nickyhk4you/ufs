@@ -1,9 +1,15 @@
 package com.ufs.campaign.fda.domain;
 
+import com.ufs.campaign.annotation.CsvField;
+
 public class Demographic {
+    @CsvField(name = "aid")
     private String aid;
+    @CsvField(name = "wechatFlag")
     private String wechatFlag;
+    @CsvField(name = "restaurant_province")
     private String restaurant_province;
+    @CsvField(name = "restaurant_city_level")
     private String restaurant_city_level;
 
     public String getWechatFlag() {
