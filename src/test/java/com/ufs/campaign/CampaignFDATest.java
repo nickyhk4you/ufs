@@ -25,35 +25,37 @@ public class CampaignFDATest {
     @Test
     public void fdaTest() {
         demographicMapper.deleteAllDemographic();
-
-        List<Demographic> demographicList = new ArrayList<Demographic>();
-        for (int i = 0; i < 10; i++) {
-            Random ran1 = new Random(10);
-            Demographic demographic = new Demographic();
-            demographic.setAid("aid_"+ran1.nextInt() + i);
-            demographic.setWechatFlag("wechat_"+i);
-            demographic.setRestaurant_city_level("level_" + i);
-            demographic.setRestaurant_county("country_" + i);
-            demographic.setRestaurant_province("province_" + i);
-            demographicList.add(demographic);
-        }
-
-        demographicMapper.batchInsert(demographicList);
-
         trialServiceMapper.deleteAllTrialService();
 
+        for (int j = 0; j < 10; j++) {
+            List<Demographic> demographicList = new ArrayList<Demographic>();
+            for (int i = 0; i < 10; i++) {
+                Random ran1 = new Random(10);
+                Demographic demographic = new Demographic();
+                demographic.setAid("aid_"+ran1.nextInt() + i);
+                demographic.setWechatFlag("wechat_"+i+j);
+                demographic.setRestaurant_city_level("level_" + i+j);
+                demographic.setRestaurant_county("country_" + i+j);
+                demographic.setRestaurant_province("province_" + System.currentTimeMillis());
+                demographicList.add(demographic);
+            }
+            demographicMapper.batchInsert(demographicList);
 
-        List<UFSTrialServiceDTO> ufsTrialServiceDTOList = new ArrayList<UFSTrialServiceDTO>();
-        for(int i=0;i<10;i++){
-            Random ran1 = new Random(10);
 
-            UFSTrialServiceDTO ufsTrialServiceDTO = new UFSTrialServiceDTO();
-            ufsTrialServiceDTO.setStdskucode("skucode_"+ran1.nextInt() +i);
-            ufsTrialServiceDTO.setStdskuname("stdskuname_"+i);
-            ufsTrialServiceDTO.setUrl("www.ufs.com/demo_url_"+i);
-            ufsTrialServiceDTOList.add(ufsTrialServiceDTO);
+
+            List<UFSTrialServiceDTO> ufsTrialServiceDTOList = new ArrayList<UFSTrialServiceDTO>();
+            for(int i=0;i<10;i++){
+                Random ran1 = new Random(10);
+
+                UFSTrialServiceDTO ufsTrialServiceDTO = new UFSTrialServiceDTO();
+                ufsTrialServiceDTO.setStdskucode("skucode_"+ran1.nextInt() +i+j);
+                ufsTrialServiceDTO.setStdskuname("stdskuname_"+i+j);
+                ufsTrialServiceDTO.setUrl("www.ufs.com/demo_url_"+System.currentTimeMillis());
+                ufsTrialServiceDTOList.add(ufsTrialServiceDTO);
+            }
+            trialServiceMapper.batchInsert(ufsTrialServiceDTOList);
         }
-        trialServiceMapper.batchInsert(ufsTrialServiceDTOList);
+
 
     }
 }
